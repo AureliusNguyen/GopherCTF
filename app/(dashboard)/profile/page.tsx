@@ -58,7 +58,7 @@ async function getUserProfile() {
 
   if (!user) redirect("/sign-in");
 
-  const totalScore = user.solves.reduce((sum, solve) => sum + solve.points, 0);
+  const totalScore = user.solves.reduce((sum: number, solve: { points: number }) => sum + solve.points, 0);
 
   return { user, totalScore };
 }
