@@ -164,7 +164,7 @@ export default async function ProfilePage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {user.solves.slice(0, 10).map((solve) => (
+              {user.solves.slice(0, 10).map((solve: typeof user.solves[number]) => (
                 <div
                   key={solve.id}
                   className="flex items-center justify-between p-3 rounded-lg border"
