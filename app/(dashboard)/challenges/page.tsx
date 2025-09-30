@@ -1,9 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { ChallengeCard } from "@/components/challenges/challenge-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
 import { calculateDynamicScore } from "@/lib/scoring";
 
 async function getChallenges() {
@@ -89,7 +89,7 @@ export default async function ChallengesPage({
       <Tabs defaultValue={selectedCategory} className="w-full">
         <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto">
           <TabsTrigger value="all" asChild>
-            <a href="/challenges?category=all">All</a>
+            <Link href="/challenges?category=all">All</Link>
           </TabsTrigger>
           {categories.map((category) => (
             <TabsTrigger
@@ -97,9 +97,9 @@ export default async function ChallengesPage({
               value={category.name.toLowerCase()}
               asChild
             >
-              <a href={`/challenges?category=${category.name.toLowerCase()}`}>
+              <Link href={`/challenges?category=${category.name.toLowerCase()}`}>
                 {category.name}
-              </a>
+              </Link>
             </TabsTrigger>
           ))}
         </TabsList>

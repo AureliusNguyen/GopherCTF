@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     console.error("Error name:", error instanceof Error ? error.name : typeof error);
     console.error("Error message:", error instanceof Error ? error.message : String(error));
     if (error instanceof Error && 'code' in error) {
-      console.error("Error code:", (error as any).code);
+      console.error("Error code:", (error as { code: string }).code);
     }
     return NextResponse.json(
       { error: "Internal server error", details: error instanceof Error ? error.message : String(error) },

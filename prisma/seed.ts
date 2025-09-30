@@ -43,7 +43,17 @@ async function main() {
   console.log('Creating challenges...');
 
   // Sample challenges
-  const challenges = [
+  const challenges: Array<{
+    title: string;
+    description: string;
+    flag: string;
+    basePoints: number;
+    minPoints: number;
+    difficulty: string;
+    categoryId: string;
+    visible: boolean;
+    files?: string | null;
+  }> = [
     {
       title: 'Easy Peasy SQL',
       description: 'A simple login page with SQL injection vulnerability.\n\nURL: http://example.com/login\n\nCan you bypass the authentication?',
