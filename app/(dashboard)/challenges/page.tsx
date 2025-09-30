@@ -51,7 +51,7 @@ export default async function ChallengesPage({
   const params = await searchParams;
 
   // Calculate dynamic points for each challenge
-  const challengesWithPoints = challenges.map((challenge) => ({
+  const challengesWithPoints = challenges.map((challenge: typeof challenges[number]) => ({
     ...challenge,
     currentPoints: calculateDynamicScore(
       challenge.basePoints,
@@ -66,14 +66,14 @@ export default async function ChallengesPage({
     selectedCategory === "all"
       ? challengesWithPoints
       : challengesWithPoints.filter(
-          (c) => c.category.name.toLowerCase() === selectedCategory
+          (c: typeof challengesWithPoints[number]) => c.category.name.toLowerCase() === selectedCategory
         );
 
   // Filter by search
   const searchQuery = params.search?.toLowerCase() || "";
   const searchedChallenges = searchQuery
     ? filteredChallenges.filter(
-        (c) =>
+        (c: typeof filteredChallenges[number]) =>
           c.title.toLowerCase().includes(searchQuery) ||
           c.description.toLowerCase().includes(searchQuery)
       )
@@ -91,7 +91,7 @@ export default async function ChallengesPage({
           <TabsTrigger value="all" asChild>
             <Link href="/challenges?category=all">All</Link>
           </TabsTrigger>
-          {categories.map((category) => (
+          {categories.map((category: typeof categories[number]) => (
             <TabsTrigger
               key={category.id}
               value={category.name.toLowerCase()}
@@ -111,7 +111,7 @@ export default async function ChallengesPage({
                 No challenges found
               </div>
             ) : (
-              searchedChallenges.map((challenge) => (
+              searchedChallenges.map((challenge: typeof searchedChallenges[number]) => (
                 <ChallengeCard
                   key={challenge.id}
                   id={challenge.id}
