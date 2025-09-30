@@ -28,9 +28,10 @@ async function getAllChallenges() {
 export default async function AdminChallengesPage() {
   const challenges = await getAllChallenges();
 
-  type Challenge = typeof challenges[number];
-  const visibleCount = challenges.filter((c: Challenge) => c.visible).length;
-  const hiddenCount = challenges.filter((c: Challenge) => !c.visible).length;
+  // Explicit type for Vercel build
+  type ChallengeType = Awaited<ReturnType<typeof getAllChallenges>>[number];
+  const visibleCount = challenges.filter((c: ChallengeType) => c.visible).length;
+  const hiddenCount = challenges.filter((c: ChallengeType) => !c.visible).length;
 
   return (
     <div className="space-y-6">
@@ -103,7 +104,7 @@ export default async function AdminChallengesPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {challenges.map((challenge: Challenge) => (
+              {challenges.map((challenge: ChallengeType) => (
                 <TableRow key={challenge.id} className={!challenge.visible ? "opacity-50" : ""}>
                   <TableCell>
                     <ChallengeVisibilityToggle
