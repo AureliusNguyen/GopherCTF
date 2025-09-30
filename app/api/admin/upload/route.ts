@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const uploadsDir = join(process.cwd(), "public", "uploads");
     try {
       await mkdir(uploadsDir, { recursive: true });
-    } catch (error) {
+    } catch {
       // Directory already exists
     }
 

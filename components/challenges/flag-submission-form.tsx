@@ -50,7 +50,7 @@ export function FlagSubmissionForm({ challengeId, solved, correctFlag }: FlagSub
       } else {
         toast.error(data.message || "Incorrect flag. Try again!");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to submit flag. Please try again.");
     } finally {
       setIsSubmitting(false);

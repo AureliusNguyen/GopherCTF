@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Trophy, Target, Users, Calendar } from "lucide-react";
 
 async function getUserProfile() {
@@ -61,11 +60,11 @@ async function getUserProfile() {
 
   const totalScore = user.solves.reduce((sum, solve) => sum + solve.points, 0);
 
-  return { user, clerkUser, totalScore };
+  return { user, totalScore };
 }
 
 export default async function ProfilePage() {
-  const { user, clerkUser, totalScore } = await getUserProfile();
+  const { user, totalScore } = await getUserProfile();
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">

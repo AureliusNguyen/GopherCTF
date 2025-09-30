@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { FlagSubmissionForm } from "@/components/challenges/flag-submission-form";
@@ -176,7 +176,7 @@ export default async function ChallengePage({
               <div>
                 <h3 className="text-lg font-semibold mb-3">First Solves</h3>
                 <div className="space-y-2">
-                  {challenge.solves.map((solve: { id: string; points: number; team: { name: string } | null; user: { username: string } }, index) => (
+                  {challenge.solves.map((solve: { id: string; points: number; team: { name: string } | null; user: { username: string } }, index: number) => (
                     <div
                       key={solve.id}
                       className="flex items-center justify-between p-3 rounded-lg border"
