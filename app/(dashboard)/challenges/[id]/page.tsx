@@ -176,7 +176,7 @@ export default async function ChallengePage({
               <div>
                 <h3 className="text-lg font-semibold mb-3">First Solves</h3>
                 <div className="space-y-2">
-                  {challenge.solves.map((solve, index) => (
+                  {challenge.solves.map((solve: { id: string; points: number; team: { name: string } | null; user: { username: string } }, index) => (
                     <div
                       key={solve.id}
                       className="flex items-center justify-between p-3 rounded-lg border"
