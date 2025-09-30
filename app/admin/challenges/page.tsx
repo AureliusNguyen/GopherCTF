@@ -28,8 +28,9 @@ async function getAllChallenges() {
 export default async function AdminChallengesPage() {
   const challenges = await getAllChallenges();
 
-  const visibleCount = challenges.filter(c => c.visible).length;
-  const hiddenCount = challenges.filter(c => !c.visible).length;
+  type Challenge = typeof challenges[number];
+  const visibleCount = challenges.filter((c: Challenge) => c.visible).length;
+  const hiddenCount = challenges.filter((c: Challenge) => !c.visible).length;
 
   return (
     <div className="space-y-6">
@@ -102,7 +103,7 @@ export default async function AdminChallengesPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {challenges.map((challenge) => (
+              {challenges.map((challenge: Challenge) => (
                 <TableRow key={challenge.id} className={!challenge.visible ? "opacity-50" : ""}>
                   <TableCell>
                     <ChallengeVisibilityToggle
