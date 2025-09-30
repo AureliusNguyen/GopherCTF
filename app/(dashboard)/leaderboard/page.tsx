@@ -42,7 +42,8 @@ async function getLeaderboardData() {
   });
 
   // Calculate individual scores
-  const individualsWithScores = individuals.map((user: typeof individuals[number]) => ({
+  type UserWithSolves = typeof individuals[number];
+  const individualsWithScores = individuals.map((user: UserWithSolves) => ({
     ...user,
     totalScore: user.solves.reduce((sum: number, solve: { points: number }) => sum + solve.points, 0),
     lastSolve: user.solves[0]?.solvedAt || null
