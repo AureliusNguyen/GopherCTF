@@ -15,6 +15,8 @@ async function main() {
     { name: 'Pwn', color: '#ef4444' },
     { name: 'Reversing', color: '#f59e0b' },
     { name: 'Misc', color: '#6366f1' },
+    { name: 'OSINT', color: '#06b6d4' },
+    { name: 'ML/AI', color: '#ec4899' },
   ];
 
   console.log('Creating categories...');
@@ -27,6 +29,7 @@ async function main() {
   }
 
   // Get created categories
+  console.log('Fetching created categories...');
   const webCat = await prisma.category.findUnique({ where: { name: 'Web' } });
   const cryptoCat = await prisma.category.findUnique({ where: { name: 'Crypto' } });
   const forensicsCat = await prisma.category.findUnique({ where: { name: 'Forensics' } });
@@ -35,6 +38,17 @@ async function main() {
   const miscCat = await prisma.category.findUnique({ where: { name: 'Misc' } });
   const osintCat = await prisma.category.findUnique({ where: { name: 'OSINT' } });
   const mlaiCat = await prisma.category.findUnique({ where: { name: 'ML/AI' } });
+
+  console.log('Categories found:', {
+    web: !!webCat,
+    crypto: !!cryptoCat,
+    forensics: !!forensicsCat,
+    pwn: !!pwnCat,
+    reversing: !!reversingCat,
+    misc: !!miscCat,
+    osint: !!osintCat,
+    mlai: !!mlaiCat
+  });
 
   if (!webCat || !cryptoCat || !forensicsCat || !pwnCat || !reversingCat || !miscCat || !osintCat || !mlaiCat) {
     throw new Error('Failed to create categories');
