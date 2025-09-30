@@ -47,7 +47,7 @@ async function getLeaderboardData() {
     ...user,
     totalScore: user.solves.reduce((sum: number, solve: { points: number }) => sum + solve.points, 0),
     lastSolve: user.solves[0]?.solvedAt || null
-  })).sort((a, b) => b.totalScore - a.totalScore);
+  })).sort((a: { totalScore: number }, b: { totalScore: number }) => b.totalScore - a.totalScore);
 
   return { teams, individuals: individualsWithScores };
 }
