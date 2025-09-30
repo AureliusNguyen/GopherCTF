@@ -36,7 +36,7 @@ async function getChallenges() {
       where: { clerkId: userId },
       include: { solves: true },
     });
-    userSolves = user?.solves.map((s) => s.challengeId) || [];
+    userSolves = user?.solves.map((s: { challengeId: string }) => s.challengeId) || [];
   }
 
   return { challenges, categories, userSolves };
