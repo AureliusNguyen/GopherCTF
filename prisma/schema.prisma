@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User model - synced with Clerk
+model User {
+  id            String       @id @default(cuid())
+  clerkId       String       @unique
+  email         String       @unique
+  username      String       @unique
+  firstName     String?
+  lastName      String?
+  imageUrl      String?
+  isAdmin       Boolean      @default(false)
+  disabled      Boolean      @default(false)
+  teamId        String?
+  team          Team?        @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  submissions   Submission[]
+  solves        Solve[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([clerkId])
+  @@index([teamId])
+}
+
+// Team model
+model Team {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  score       Int          @default(0)
+  disabled    Boolean      @default(false)
+  members     User[]
+  submissions Submission[]
+  solves      Solve[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([score])
+}
+
+// Category model
+model Category {
+  id         String      @id @default(cuid())
+  name       String      @unique
+  color      String      @default("#3b82f6")
+  challenges Challenge[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+// Challenge model
+model Challenge {
+  id          String       @id @default(cuid())
+  title       String       @unique
+  description String
+  flag        String
+  basePoints  Int
+  minPoints   Int          @default(50)
+  difficulty  String       @default("medium") // easy, medium, hard
+  categoryId  String
+  category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  visible     Boolean      @default(true)
+  files       String?
+  submissions Submission[]
+  solves      Solve[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([categoryId])
+  @@index([visible])
+}
+
+// Submission model - tracks all flag submission attempts
+model Submission {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  submitted   String
+  correct     Boolean
+  createdAt   DateTime  @default(now())
+
+  @@index([userId])
+  @@index([teamId])
+  @@index([challengeId])
+  @@index([correct])
+}
+
+// Solve model - tracks successful solves for dynamic scoring
+model Solve {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId      String?
+  team        Team?     @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  points      Int
+  solvedAt    DateTime  @default(now())
+
+  @@unique([userId, challengeId])
+  @@unique([teamId, challengeId])
+  @@index([userId])
+  @@index([teamId])
+  @@index([challengeId])
+}
