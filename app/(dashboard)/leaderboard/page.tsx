@@ -42,9 +42,9 @@ async function getLeaderboardData() {
   });
 
   // Calculate individual scores
-  const individualsWithScores = individuals.map(user => ({
+  const individualsWithScores = individuals.map((user: typeof individuals[number]) => ({
     ...user,
-    totalScore: user.solves.reduce((sum, solve) => sum + solve.points, 0),
+    totalScore: user.solves.reduce((sum: number, solve: { points: number }) => sum + solve.points, 0),
     lastSolve: user.solves[0]?.solvedAt || null
   })).sort((a, b) => b.totalScore - a.totalScore);
 
@@ -108,7 +108,7 @@ export default async function LeaderboardPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {teams.map((team, index) => (
+                    {teams.map((team: typeof teams[number], index: number) => (
                       <TableRow key={team.id}>
                         <TableCell className="font-medium">
                           {getRankIcon(index + 1)}
@@ -164,7 +164,7 @@ export default async function LeaderboardPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {individuals.map((user, index) => (
+                    {individuals.map((user: typeof individuals[number], index: number) => (
                       <TableRow key={user.id}>
                         <TableCell className="font-medium">
                           {getRankIcon(index + 1)}
